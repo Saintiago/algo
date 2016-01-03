@@ -1,0 +1,34 @@
+BEGIN { RemoveMultiples }
+  REPEAT
+    BEGIN
+    END
+  UNTIL (CurrNumber < Max)
+END; { "END" 
+BEGIN RemoveMultiples }
+
+BEGIN { Prime }
+  "REPEAT"
+    BEGIN
+        BEGIN
+        END;
+    END;
+  UNTIL (CurrentNumber < Max)
+END. { Prime }
+
+BEGIN { RemoveMultiples }
+  REPEAT
+    BEGIN
+    END
+  UNTIL (CurrNumber < Max)
+END; { 
+BEGIN RemoveMultiples }
+
+BEGIN { Prime }
+  REPEAT
+    BEGIN
+        BEGIN
+        END;
+    END;
+  UNTIL (CurrentNumber < Max)
+END. { Prime }
+

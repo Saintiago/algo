@@ -1,0 +1,11 @@
+BEGIN {AverageScore}
+    BEGIN
+      REPEAT
+        BEGIN
+          UNTIL
+          REPEAT;
+        END;
+      UNTIL	
+    END;
+END.  {AverageScore}
+
