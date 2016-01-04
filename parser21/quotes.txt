@@ -1,8 +1,0 @@
-BEGIN { Prime }
-  "REPEAT"
-    BEGIN
-        BEGIN
-        END;
-    END;
-  UNTIL (CurrentNumber < Max)
-END. { Prime }

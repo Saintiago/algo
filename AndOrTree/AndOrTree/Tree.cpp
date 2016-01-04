@@ -2,11 +2,11 @@
 #include "Tree.h"
 
 
-Tree::Tree()
+CTree::CTree()
 {
 }
 
 
-Tree::~Tree()
+CTree::~CTree()
 {
 }
