@@ -9,6 +9,15 @@
 
 #include <stdio.h>
 #include <tchar.h>
+#include <memory>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <exception>
+#include <stack>
+#include <map>
+#include <algorithm>
 
 
 
