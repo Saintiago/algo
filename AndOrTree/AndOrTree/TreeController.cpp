@@ -86,16 +86,33 @@ void CTreeController::WriteTree(ostream & out)
 void CTreeController::WriteElements(ostream & out, unsigned recursionLevel)
 {
 	unsigned elementCount = 0;
-	while (!m_orNodes.at(recursionLevel)->SetNextChosenSon())
+	while (m_orNodes.at(recursionLevel)->SetNextChosenSon())
 	{
-		out << endl << "-----------------------------" << endl;
-		WriteElement(out, m_tree->GetHead());
-		m_elementCount++;
 		if ((recursionLevel + 1) < m_orNodes.size())
 		{
 			WriteElements(out, (recursionLevel + 1));
 		}
+
+		if (AllOrNodesHaveChosen())
+		{
+			m_elementCount++;
+			out << endl << "Element " << m_elementCount << endl << "-----------------------------" << endl;
+			WriteElement(out, m_tree->GetHead());
+		}
 	}
+}
+
+bool CTreeController::AllOrNodesHaveChosen()
+{
+	bool allNodesHaveChosen = true;
+	for (auto node : m_orNodes)
+	{
+		if (node->GetChosenSon() == nullptr)
+		{
+			allNodesHaveChosen = false;
+		}
+	}
+	return allNodesHaveChosen;
 }
 
 unsigned CTreeController::GetElementCount()

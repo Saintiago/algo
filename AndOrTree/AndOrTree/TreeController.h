@@ -24,6 +24,7 @@ private:
 	void WriteNode(std::ostream & out, NodePtr node);
 	void WriteElement(std::ostream & out, NodePtr node);
 	std::vector<NodePtr> m_orNodes;
+	bool AllOrNodesHaveChosen();
 
 	TreePtr m_tree;
 	unsigned m_elementCount = 0;

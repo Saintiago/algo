@@ -54,8 +54,7 @@ NodePtr CNode::GetChosenSon()
 			return son;
 		}
 	}
-	SetNextChosenSon();
-	return GetChosenSon();
+	return nullptr;
 }
 
 bool CNode::SetNextChosenSon()
@@ -66,16 +65,16 @@ bool CNode::SetNextChosenSon()
 		{
 			m_sons.at(i)->SetChosen(false);
 			unsigned next = i + 1;
-			if (next >= m_sons.size())
+			if (next < m_sons.size())
 			{
-				next = 0;
+				m_sons.at(next)->SetChosen(true);
+				return true;
 			}
-			m_sons.at(next)->SetChosen(true);
-			return (next == 0);
+			return false;
 		}
 	}
 	m_sons.at(0)->SetChosen(true);
-	return false;
+	return true;
 }
 
 CNode::~CNode()
