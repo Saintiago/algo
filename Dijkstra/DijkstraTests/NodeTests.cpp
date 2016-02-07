@@ -6,9 +6,9 @@ struct Node_
 	CNode node;
 	Node_()
 	{
+		node.AddLink(std::make_shared<CNode>(), 14);
 		node.AddLink(std::make_shared<CNode>(), 7);
 		node.AddLink(std::make_shared<CNode>(), 9);
-		node.AddLink(std::make_shared<CNode>(), 14);
 	}
 };
 // ”зел
@@ -20,6 +20,12 @@ BOOST_FIXTURE_TEST_SUITE(Node, Node_)
 		node.AddLink(std::make_shared<CNode>(), 3);
 		BOOST_CHECK_EQUAL(node.GetLinks().size(), 4);
 		BOOST_CHECK_EQUAL(node.GetLinks().at(3)->second, 3);
+	}
+
+	// @TODO может отсортировать свои св€зи по длине пути
+	BOOST_AUTO_TEST_CASE(can_sort_own_links_by_path)
+	{
+		//BOOST_CHECK_NO_THROW(node.SortLinks());
 	}
 
 BOOST_AUTO_TEST_SUITE_END()

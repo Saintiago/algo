@@ -33,3 +33,22 @@ NodePathPairPtrVector & CNode::GetLinks()
 {
 	return m_links;
 }
+
+bool CNode::GetVisited()
+{
+	return m_visited;
+}
+
+void CNode::SetVisited(bool visited)
+{
+	m_visited = visited;
+}
+
+NodePtr CNode::GetMinPathNode()
+{
+	unsigned minPath = INFINITY;
+	for (auto & link : m_links)
+	{
+		if (link->second < )
+	}
+}

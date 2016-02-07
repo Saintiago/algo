@@ -13,7 +13,7 @@ class CNode
 {
 public:
 
-	CNode(unsigned weight = INT_MAX);
+	CNode(unsigned weight = INFINITY);
 	~CNode();
 
 	unsigned GetWeight();
@@ -22,7 +22,13 @@ public:
 	void AddLink(NodePtr & node, unsigned weight);
 	NodePathPairPtrVector & GetLinks();
 
+	bool GetVisited();
+	void SetVisited();
+
+	NodePtr GetMinPathNode();
+
 private:
 	unsigned m_weight;
 	NodePathPairPtrVector m_links;
+	bool m_visited = false;
 };

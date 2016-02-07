@@ -148,14 +148,17 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Dijkstra\DijkstraAlgorithm.h" />
     <ClInclude Include="..\Dijkstra\Graph.h" />
     <ClInclude Include="..\Dijkstra\Node.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Dijkstra\DijkstraAlgorithm.cpp" />
     <ClCompile Include="..\Dijkstra\Graph.cpp" />
     <ClCompile Include="..\Dijkstra\Node.cpp" />
+    <ClCompile Include="DijkstraAlgorithmTests.cpp" />
     <ClCompile Include="DijkstraTests.cpp" />
     <ClCompile Include="GraphTests.cpp" />
     <ClCompile Include="NodeTests.cpp" />
