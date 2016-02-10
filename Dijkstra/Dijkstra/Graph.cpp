@@ -48,7 +48,7 @@ NodePtr CGraph::GetNode(unsigned index)
 
 void CGraph::AddNode()
 {
-	m_nodes.push_back(make_shared<CNode>());
+	m_nodes.push_back(make_shared<CNode>(INT_MAX));
 }
 
 void CGraph::FillNodeLinks(std::istream & links, unsigned index)
@@ -69,9 +69,14 @@ void CGraph::FillNodeLinks(std::istream & links, unsigned index)
 		links >> linkWeight;
 		if (linkWeight > 0)
 		{
-			NodePtr tmpLink = make_shared<CNode>(*m_nodes[index]);
-			m_nodes[indexInner]->AddLink(tmpLink, linkWeight);
+			//NodePtr tmpLink = make_shared<CNode>(*m_nodes[index]);
+			m_nodes.at(indexInner)->AddLink(m_nodes.at(index), linkWeight);
 		}
 		indexInner++;
 	}
+}
+
+NodePtrVector CGraph::GetNodes()
+{
+	return m_nodes;
 }

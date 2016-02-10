@@ -11,6 +11,7 @@ public:
 	void CreateByAdjacencyMatrix(std::istream & adjacencyMatrix);
 	size_t Size();
 	NodePtr GetNode(unsigned index);
+	NodePtrVector GetNodes();
 
 private:
 	NodePtrVector m_nodes;

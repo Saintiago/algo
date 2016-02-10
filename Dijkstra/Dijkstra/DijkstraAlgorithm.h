@@ -10,16 +10,15 @@ public:
 
 	void MakeGraph(std::ifstream & fin);
 	CGraph GetGraph();
-
 	void SetStartNode(unsigned index);
+	unsigned FindPathFromStartTo(unsigned index);
 	NodePtr GetStartNode();
-
-	void SetEndNode(unsigned index);
-	NodePtr GetEndNode();
-	NodePtr GeMinPathNode(unsigned index);
+	
 
 private:
 	CGraph m_graph;
 	NodePtr m_start, m_end;
+	
+	void FindPaths(NodePtr node);
 };
 

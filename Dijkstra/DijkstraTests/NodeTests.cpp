@@ -19,13 +19,10 @@ BOOST_FIXTURE_TEST_SUITE(Node, Node_)
 	{
 		node.AddLink(std::make_shared<CNode>(), 3);
 		BOOST_CHECK_EQUAL(node.GetLinks().size(), 4);
-		BOOST_CHECK_EQUAL(node.GetLinks().at(3)->second, 3);
-	}
-
-	// @TODO может отсортировать свои связи по длине пути
-	BOOST_AUTO_TEST_CASE(can_sort_own_links_by_path)
-	{
-		//BOOST_CHECK_NO_THROW(node.SortLinks());
+		BOOST_CHECK_EQUAL(node.GetLinks().at(0)->second, 3);
+		BOOST_CHECK_EQUAL(node.GetLinks().at(1)->second, 7);
+		BOOST_CHECK_EQUAL(node.GetLinks().at(2)->second, 9);
+		BOOST_CHECK_EQUAL(node.GetLinks().at(3)->second, 14);
 	}
 
 BOOST_AUTO_TEST_SUITE_END()

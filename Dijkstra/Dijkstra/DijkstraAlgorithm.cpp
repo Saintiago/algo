@@ -25,7 +25,7 @@ CGraph CDijkstraAlgorithm::GetGraph()
 void CDijkstraAlgorithm::SetStartNode(unsigned index)
 {
 	m_start = m_graph.GetNode(index);
-	m_start->SetWeight(0);
+	m_start->SetPath(0);
 }
 
 NodePtr CDijkstraAlgorithm::GetStartNode()
@@ -33,18 +33,35 @@ NodePtr CDijkstraAlgorithm::GetStartNode()
 	return m_start;
 }
 
-void CDijkstraAlgorithm::SetEndNode(unsigned index)
+unsigned CDijkstraAlgorithm::FindPathFromStartTo(unsigned index)
 {
-	m_end = m_graph.GetNode(index);
+	FindPaths(GetStartNode());
+	return GetGraph().GetNode(index)->GetPath();
 }
 
-NodePtr CDijkstraAlgorithm::GetEndNode()
+void CDijkstraAlgorithm::FindPaths(NodePtr node)
 {
-	return m_end;
-}
+	unsigned currentPath = node->GetPath();
+	
+	for (auto & link : node->GetLinks())
+	{
+		if (!link->first->GetVisited())
+		{
+			unsigned newPath = currentPath + link->second;
+			if (newPath < link->first->GetPath())
+			{
+				link->first->SetPath(newPath);
+			}
+		}
+	}
 
-NodePtr CDijkstraAlgorithm::GeMinPathNode(unsigned index)
-{
-	NodePtr currNode = m_graph.GetNode(index);
-	return currNode->GetMinPathNode();
+	node->SetVisited(true);
+
+	for (auto & link : node->GetLinks())
+	{
+		if (!link->first->GetVisited())
+		{
+			FindPaths(link->first);
+		}
+	}
 }
