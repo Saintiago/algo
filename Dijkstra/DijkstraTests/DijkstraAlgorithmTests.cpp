@@ -32,6 +32,9 @@ BOOST_FIXTURE_TEST_SUITE(DijkstraAlgorithm, DijkstraAlgorithm_)
 	BOOST_AUTO_TEST_CASE(can_find_shortest_path_from_start_node_to_end_node)
 	{
 		BOOST_CHECK_EQUAL(dijkstra.FindPathFromStartTo(5), 11);
+		dijkstra.GetGraph().ResetPaths();
+		dijkstra.SetStartNode(5);
+		BOOST_CHECK_EQUAL(dijkstra.FindPathFromStartTo(0), 11);
 	}
 
 BOOST_AUTO_TEST_SUITE_END()

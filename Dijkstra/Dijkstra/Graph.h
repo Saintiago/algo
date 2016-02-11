@@ -12,6 +12,7 @@ public:
 	size_t Size();
 	NodePtr GetNode(unsigned index);
 	NodePtrVector GetNodes();
+	void ResetPaths();
 
 private:
 	NodePtrVector m_nodes;

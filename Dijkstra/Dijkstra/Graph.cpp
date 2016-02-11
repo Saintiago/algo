@@ -92,3 +92,11 @@ void CGraph::CreateNodes(std::ifstream & is)
 	}
 	is.seekg(0);
 }
+
+void CGraph::ResetPaths()
+{
+	for (auto & node : m_nodes)
+	{
+		node->ResetPath();
+	}
+}

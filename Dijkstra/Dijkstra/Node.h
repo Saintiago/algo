@@ -23,9 +23,10 @@ public:
 
 	bool GetVisited();
 	void SetVisited(bool visited);
+	void ResetPath();
 
 private:
-	unsigned m_weight;
+	unsigned m_path;
 	NodePathPairVector m_links;
 	bool m_visited = false;
 };

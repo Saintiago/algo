@@ -35,6 +35,7 @@ NodePtr CDijkstraAlgorithm::GetStartNode()
 
 unsigned CDijkstraAlgorithm::FindPathFromStartTo(unsigned index)
 {
+	cout << "Searching path to " << index << "th node..." << endl;
 	FindPaths(GetStartNode());
 	return GetGraph().GetNode(index)->GetPath();
 }
@@ -49,9 +50,15 @@ void CDijkstraAlgorithm::FindPaths(NodePtr node)
 		if (!linkNode->GetVisited())
 		{
 			unsigned newPath = currentPath + link.second;
+			cout << "Path from start to " << link.first << "th node: " << newPath << endl;
 			if (newPath < linkNode->GetPath())
 			{
+				cout << "New path are better than old (" << linkNode->GetPath()  <<") and we replace it. " << endl;
 				linkNode->SetPath(newPath);
+			}
+			else
+			{
+				cout << "New path aren't better than old (" << linkNode->GetPath() << ") and we stick with the old path. " << endl;
 			}
 		}
 	}

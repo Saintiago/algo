@@ -4,7 +4,7 @@
 using namespace std;
 
 CNode::CNode(unsigned weight)
-	: m_weight(weight)
+	: m_path(weight)
 {
 }
 
@@ -15,12 +15,12 @@ CNode::~CNode()
 
 unsigned CNode::GetPath()
 {
-	return m_weight;
+	return m_path;
 }
 
 void CNode::SetPath(unsigned weight)
 {
-	m_weight = weight;
+	m_path = weight;
 }
 
 void CNode::AddLink(unsigned node, unsigned weight)
@@ -56,4 +56,10 @@ bool CNode::GetVisited()
 void CNode::SetVisited(bool visited)
 {
 	m_visited = visited;
+}
+
+void CNode::ResetPath()
+{
+	SetPath(INT_MAX);
+	SetVisited(false);
 }
