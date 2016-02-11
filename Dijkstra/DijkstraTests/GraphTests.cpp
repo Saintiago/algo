@@ -20,7 +20,7 @@ BOOST_FIXTURE_TEST_SUITE(Graph, Graph_)
 		BOOST_CHECK_EQUAL(graph.Size(), 6);
 		BOOST_CHECK_EQUAL(graph.GetNode(0)->GetLinks().size(), 3);
 
-		BOOST_CHECK_EQUAL(graph.GetNode(0)->GetLinks().at(0)->first->GetLinks().size(), 3);
+		BOOST_CHECK_EQUAL(graph.GetNode(graph.GetNode(0)->GetLinks().at(0).first)->GetLinks().size(), 3);
 
 		BOOST_CHECK_EQUAL(graph.GetNode(1)->GetLinks().size(), 3);
 		BOOST_CHECK_EQUAL(graph.GetNode(2)->GetLinks().size(), 4);

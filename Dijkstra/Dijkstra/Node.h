@@ -4,29 +4,28 @@
 class CNode;
 typedef std::shared_ptr<CNode> NodePtr;
 typedef std::vector<NodePtr> NodePtrVector;
-typedef std::pair<NodePtr, unsigned> NodePathPair;
-typedef std::shared_ptr<NodePathPair> NodePathPairPtr;
-typedef std::vector<NodePathPairPtr> NodePathPairPtrVector;
+typedef std::pair<unsigned, unsigned> NodePathPair;
+typedef std::vector<NodePathPair> NodePathPairVector;
 
 
 class CNode
 {
 public:
 
-	CNode(unsigned weight = 1);
+	CNode(unsigned weight = INT_MAX);
 	~CNode();
 
 	unsigned GetPath();
 	void SetPath(unsigned weight);
 
-	void AddLink(NodePtr & node, unsigned weight);
-	NodePathPairPtrVector & GetLinks();
+	void AddLink(unsigned node, unsigned weight);
+	NodePathPairVector & GetLinks();
 
 	bool GetVisited();
 	void SetVisited(bool visited);
 
 private:
 	unsigned m_weight;
-	NodePathPairPtrVector m_links;
+	NodePathPairVector m_links;
 	bool m_visited = false;
 };

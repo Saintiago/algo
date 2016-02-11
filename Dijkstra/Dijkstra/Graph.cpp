@@ -19,15 +19,15 @@ CGraph::~CGraph()
 {
 }
 
-void CGraph::CreateByAdjacencyMatrix(istream & is)
+void CGraph::CreateByAdjacencyMatrix(ifstream & is)
 {
-	unsigned index = 0;
+	CreateNodes(is);
 	string line;
+	unsigned index = 0;
 	while (!is.eof())
 	{
-		getline(is, line);
-		stringstream ss(line);
-		FillNodeLinks(ss, index);
+		
+		FillNodeLinks(is, index);
 		index++;
 	}
 }
@@ -48,29 +48,28 @@ NodePtr CGraph::GetNode(unsigned index)
 
 void CGraph::AddNode()
 {
-	m_nodes.push_back(make_shared<CNode>(INT_MAX));
+	m_nodes.push_back(make_shared<CNode>());
 }
 
-void CGraph::FillNodeLinks(std::istream & links, unsigned index)
+void CGraph::FillNodeLinks(std::ifstream & is, unsigned index)
 {
 	if (index > (Size() - 1))
 	{
 		ThrowOutOfRange(index);
 	}
 
+	string line;
+	getline(is, line);
+	stringstream links(line);
+
 	unsigned indexInner = 0;
 	unsigned linkWeight;
 	while (!links.eof())
 	{
-		if ((indexInner + 1) > Size())
-		{
-			AddNode();
-		}
 		links >> linkWeight;
 		if (linkWeight > 0)
 		{
-			//NodePtr tmpLink = make_shared<CNode>(*m_nodes[index]);
-			m_nodes.at(indexInner)->AddLink(m_nodes.at(index), linkWeight);
+			m_nodes.at(index)->AddLink(indexInner, linkWeight);
 		}
 		indexInner++;
 	}
@@ -79,4 +78,17 @@ void CGraph::FillNodeLinks(std::istream & links, unsigned index)
 NodePtrVector CGraph::GetNodes()
 {
 	return m_nodes;
+}
+
+void CGraph::CreateNodes(std::ifstream & is)
+{
+	string str, weight;
+	getline(is, str);
+	stringstream ss(str);
+	while (!ss.eof())
+	{
+		AddNode();
+		ss >> weight;
+	}
+	is.seekg(0);
 }

@@ -8,7 +8,7 @@ public:
 	CGraph();
 	~CGraph();
 
-	void CreateByAdjacencyMatrix(std::istream & adjacencyMatrix);
+	void CreateByAdjacencyMatrix(std::ifstream & adjacencyMatrix);
 	size_t Size();
 	NodePtr GetNode(unsigned index);
 	NodePtrVector GetNodes();
@@ -17,6 +17,7 @@ private:
 	NodePtrVector m_nodes;
 
 	void AddNode();
-	void FillNodeLinks(std::istream & links, unsigned index);
+	void CreateNodes(std::ifstream & is);
+	void FillNodeLinks(std::ifstream & is, unsigned index);
 };
 

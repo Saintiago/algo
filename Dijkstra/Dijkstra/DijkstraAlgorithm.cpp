@@ -45,12 +45,13 @@ void CDijkstraAlgorithm::FindPaths(NodePtr node)
 	
 	for (auto & link : node->GetLinks())
 	{
-		if (!link->first->GetVisited())
+		auto linkNode = GetGraph().GetNode(link.first);
+		if (!linkNode->GetVisited())
 		{
-			unsigned newPath = currentPath + link->second;
-			if (newPath < link->first->GetPath())
+			unsigned newPath = currentPath + link.second;
+			if (newPath < linkNode->GetPath())
 			{
-				link->first->SetPath(newPath);
+				linkNode->SetPath(newPath);
 			}
 		}
 	}
@@ -59,9 +60,10 @@ void CDijkstraAlgorithm::FindPaths(NodePtr node)
 
 	for (auto & link : node->GetLinks())
 	{
-		if (!link->first->GetVisited())
+		auto linkNode = GetGraph().GetNode(link.first);
+		if (!linkNode->GetVisited())
 		{
-			FindPaths(link->first);
+			FindPaths(linkNode);
 		}
 	}
 }
