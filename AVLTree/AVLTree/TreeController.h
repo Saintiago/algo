@@ -13,6 +13,7 @@ public:
 	void WriteNode(NodePtr root, std::ostream & out);
 	std::string GetRecord(int key);
 	void AddRecord(int key, std::string data);
+	bool IsSet(int key);
 
 private:
 

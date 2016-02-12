@@ -32,6 +32,7 @@ void CTreeController::WriteNode(NodePtr root, ostream & out)
 	if (root->m_left != nullptr)
 	{
 		WriteNode(root->m_left, out);
+		out << endl;
 	}
 	
 	out << root->m_key << " " << root->m_data;
@@ -82,4 +83,17 @@ NodePtr CTreeController::GetNode(NodePtr root, int key)
 void CTreeController::AddRecord(int key, std::string data)
 {
 	m_root->insert(m_root, make_shared<CNode>(key, data));
+}
+
+bool CTreeController::IsSet(int key)
+{
+	try
+	{
+		GetNode(m_root, key);
+		return true;
+	}
+	catch (out_of_range e)
+	{
+		return false;
+	}
 }
