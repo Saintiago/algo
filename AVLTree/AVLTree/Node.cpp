@@ -1,40 +1,41 @@
 #include "stdafx.h"
-#include "Tree.h"
+#include "Node.h"
 
 using namespace std;
 
-CTree::CTree(int k)
-{
-	m_key = k; 
-	m_left = m_right = 0; 
-	m_height = 1;
-}
-
-
-CTree::~CTree()
+CNode::CNode(int key, string data)
+	: m_key(key)
+	, m_data(data)
+	, m_left(nullptr)
+	, m_right(nullptr)
 {
 }
 
-unsigned char CTree::height(TreePtr p)
+
+CNode::~CNode()
+{
+}
+
+unsigned char CNode::height(NodePtr p)
 {
 	return p ? p->m_height : 0;
 }
 
-int CTree::bfactor(TreePtr p)
+int CNode::bfactor(NodePtr p)
 {
 	return height(p->m_right) - height(p->m_left);
 }
 
-void CTree::fixheight(TreePtr p)
+void CNode::fixheight(NodePtr p)
 {
 	unsigned char hl = height(p->m_left);
 	unsigned char hr = height(p->m_right);
 	p->m_height = (hl>hr ? hl : hr) + 1;
 }
 
-TreePtr CTree::rotateright(TreePtr p) // правый поворот вокруг p
+NodePtr CNode::rotateright(NodePtr p) // правый поворот вокруг p
 {
-	TreePtr q = p->m_left;
+	NodePtr q = p->m_left;
 	p->m_left = q->m_right;
 	q->m_right = p;
 	fixheight(p);
@@ -42,9 +43,9 @@ TreePtr CTree::rotateright(TreePtr p) // правый поворот вокруг p
 	return q;
 }
 
-TreePtr CTree::rotateleft(TreePtr q) // левый поворот вокруг q
+NodePtr CNode::rotateleft(NodePtr q) // левый поворот вокруг q
 {
-	TreePtr p = q->m_right;
+	NodePtr p = q->m_right;
 	q->m_right = p->m_left;
 	p->m_left = q;
 	fixheight(q);
@@ -52,7 +53,7 @@ TreePtr CTree::rotateleft(TreePtr q) // левый поворот вокруг q
 	return p;
 }
 
-TreePtr CTree::balance(TreePtr p) // балансировка узла p
+NodePtr CNode::balance(NodePtr p) // балансировка узла p
 {
 	fixheight(p);
 	if (bfactor(p) == 2)
@@ -70,22 +71,22 @@ TreePtr CTree::balance(TreePtr p) // балансировка узла p
 	return p; // балансировка не нужна
 }
 
-TreePtr CTree::insert(TreePtr p, int k) // вставка ключа k в дерево с корнем p
+NodePtr CNode::insert(NodePtr root, NodePtr newNode) // вставка ключа k в дерево с корнем p
 {
-	if (!p) return make_shared<CTree>(k);
-	if (k<p->m_key)
-		p->m_left = insert(p->m_left, k);
+	if (!root) return newNode;
+	if (newNode->m_key < root->m_key)
+		root->m_left = insert(root->m_left, newNode);
 	else
-		p->m_right = insert(p->m_right, k);
-	return balance(p);
+		root->m_right = insert(root->m_right, newNode);
+	return balance(root);
 }
 
-TreePtr CTree::findmin(TreePtr p) // поиск узла с минимальным ключом в дереве p 
+NodePtr CNode::findmin(NodePtr p) // поиск узла с минимальным ключом в дереве p 
 {
 	return p->m_left ? findmin(p->m_left) : p;
 }
 
-TreePtr CTree::removemin(TreePtr p) // удаление узла с минимальным ключом из дерева p
+NodePtr CNode::removemin(NodePtr p) // удаление узла с минимальным ключом из дерева p
 {
 	if (p->m_left == 0)
 		return p->m_right;
@@ -93,7 +94,7 @@ TreePtr CTree::removemin(TreePtr p) // удаление узла с минимальным ключом из дер
 	return balance(p);
 }
 
-TreePtr CTree::remove(TreePtr p, int k) // удаление ключа k из дерева p
+NodePtr CNode::remove(NodePtr p, int k) // удаление ключа k из дерева p
 {
 	if (!p) return 0;
 	if (k < p->m_key)
@@ -102,11 +103,11 @@ TreePtr CTree::remove(TreePtr p, int k) // удаление ключа k из дерева p
 		p->m_right = remove(p->m_right, k);
 	else //  k == p->key 
 	{
-		TreePtr q = p->m_left;
-		TreePtr r = p->m_right;
+		NodePtr q = p->m_left;
+		NodePtr r = p->m_right;
 		p = nullptr;
 		if (!r) return q;
-		TreePtr min = findmin(r);
+		NodePtr min = findmin(r);
 		min->m_right = removemin(r);
 		min->m_left = q;
 		return balance(min);
