@@ -73,7 +73,7 @@ NodePtr CNode::balance(NodePtr p) // балансировка узла p
 
 NodePtr CNode::insert(NodePtr root, NodePtr newNode) // вставка ключа k в дерево с корнем p
 {
-	if (!root) return newNode;
+	if (root == nullptr) return newNode;
 	if (newNode->m_key < root->m_key)
 		root->m_left = insert(root->m_left, newNode);
 	else

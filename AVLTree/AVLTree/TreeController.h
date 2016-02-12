@@ -17,7 +17,7 @@ public:
 
 private:
 
-	NodePtr m_root;
+	NodePtr m_root = nullptr;
 
 	NodePtr MakeNode(std::ifstream & in);
 	NodePtr GetNode(NodePtr root, int key);

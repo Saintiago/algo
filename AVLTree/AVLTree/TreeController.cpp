@@ -15,10 +15,9 @@ CTreeController::~CTreeController()
 
 void CTreeController::ReadTree(ifstream & in)
 {
-	m_root = MakeNode(in);
 	while (!in.eof())
 	{
-		m_root->insert(m_root, MakeNode(in));
+		m_root = m_root->insert(m_root, MakeNode(in));
 	}
 }
 
@@ -65,7 +64,7 @@ std::string CTreeController::GetRecord(int key)
 
 NodePtr CTreeController::GetNode(NodePtr root, int key)
 {
-	if (root->m_left != nullptr)
+	if (root->m_left != nullptr && key < root->m_key)
 	{
 		return GetNode(root->m_left, key);
 	}
@@ -73,7 +72,7 @@ NodePtr CTreeController::GetNode(NodePtr root, int key)
 	{
 		return root;
 	}
-	if (root->m_right != nullptr)
+	if (root->m_right != nullptr && key > root->m_key)
 	{
 		return GetNode(root->m_right, key);
 	}

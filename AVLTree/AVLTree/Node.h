@@ -23,9 +23,9 @@ public:
 
 
 
-	int m_key;
-	std::string m_data;
-	unsigned char m_height;
+	int m_key = 0;
+	std::string m_data = "";
+	unsigned char m_height = 0;
 	NodePtr m_left;
 	NodePtr m_right;
 };
