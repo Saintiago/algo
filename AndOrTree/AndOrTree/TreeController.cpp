@@ -54,7 +54,7 @@ void CTreeController::ReadTree(ifstream & in)
 			m_orNodes.push_back(node);
 		}
 
-		int levelDiff = node->GetLevel() - parents.top()->GetLevel();
+		int levelDiff = node->GetLevel() - parents.top()->GetLevel(); // int - cause can be less than 0
 		if (levelDiff == 1)
 		{
 			parents.top()->AddSon(node);

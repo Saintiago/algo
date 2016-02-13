@@ -19,15 +19,32 @@ CGraph::~CGraph()
 {
 }
 
-void CGraph::CreateByAdjacencyMatrix(ifstream & is)
+void CGraph::CreateByArcList(ifstream & is)
 {
-	CreateNodes(is);
 	string line;
-	unsigned index = 0;
-	while (!is.eof())
+	unsigned n1, n2, path;
+	while (getline(is, line))
 	{
-		
-		FillNodeLinks(is, index);
+		stringstream arc(line);
+		arc >> n1 >> n2 >> path;
+		AddNode(n1);
+		AddNode(n2);
+		m_nodes.at(n1)->AddLink(n2, path);
+		m_nodes.at(n2)->AddLink(n1, path);
+	}
+}
+
+void CGraph::WriteGraph(ostream & out)
+{
+	unsigned index = 0;
+	for (auto & node : m_nodes)
+	{
+		out << "Node " << index << " linked to: ";
+		for (auto & link : node->GetLinks())
+		{
+			out << "(" << link.first << ", " << link.second << ") ";
+		}
+		out << endl;
 		index++;
 	}
 }
@@ -46,51 +63,19 @@ NodePtr CGraph::GetNode(unsigned index)
 	return m_nodes.at(index);
 }
 
-void CGraph::AddNode()
+void CGraph::AddNode(unsigned index)
 {
-	m_nodes.push_back(make_shared<CNode>());
-}
-
-void CGraph::FillNodeLinks(std::ifstream & is, unsigned index)
-{
-	if (index > (Size() - 1))
-	{
-		ThrowOutOfRange(index);
-	}
-
-	string line;
-	getline(is, line);
-	stringstream links(line);
-
-	unsigned indexInner = 0;
-	unsigned linkWeight;
-	while (!links.eof())
-	{
-		links >> linkWeight;
-		if (linkWeight > 0)
+	unsigned curSize = m_nodes.size();
+	if (index >= curSize)
+		for (unsigned i = 0; i <= (index - curSize); i++)
 		{
-			m_nodes.at(index)->AddLink(indexInner, linkWeight);
+			m_nodes.push_back(make_shared<CNode>());
 		}
-		indexInner++;
-	}
 }
 
 NodePtrVector CGraph::GetNodes()
 {
 	return m_nodes;
-}
-
-void CGraph::CreateNodes(std::ifstream & is)
-{
-	string str, weight;
-	getline(is, str);
-	stringstream ss(str);
-	while (!ss.eof())
-	{
-		AddNode();
-		ss >> weight;
-	}
-	is.seekg(0);
 }
 
 void CGraph::ResetPaths()

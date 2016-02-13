@@ -10,7 +10,7 @@ struct TreeController_
 
 	TreeController_()
 	{
-		fin.open("../Debug/input.txt");
+		fin.open("../input.txt");
 		controller.ReadTree(fin);
 		
 	}

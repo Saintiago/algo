@@ -26,23 +26,6 @@ void CTreeController::WriteTree(ostream & out)
 	WriteNode(m_root, out);
 }
 
-void CTreeController::WriteNode(NodePtr root, ostream & out)
-{
-	if (root->m_left != nullptr)
-	{
-		WriteNode(root->m_left, out);
-		out << endl;
-	}
-	
-	out << root->m_key << " " << root->m_data;
-
-	if (root->m_right != nullptr)
-	{
-		out << endl;
-		WriteNode(root->m_right, out);
-	}
-}
-
 NodePtr CTreeController::MakeNode(std::ifstream & in)
 {
 	string lineOfText;
@@ -81,7 +64,7 @@ NodePtr CTreeController::GetNode(NodePtr root, int key)
 
 void CTreeController::AddRecord(int key, std::string data)
 {
-	m_root->insert(m_root, make_shared<CNode>(key, data));
+	m_root = m_root->insert(m_root, make_shared<CNode>(key, data));
 }
 
 bool CTreeController::IsSet(int key)
@@ -95,4 +78,24 @@ bool CTreeController::IsSet(int key)
 	{
 		return false;
 	}
+}
+
+void CTreeController::WriteNode(NodePtr node, std::ostream & out, size_t level)
+{
+	out << GetLevelString(level) << " [" << node->m_key << "] " << node->m_data << endl;
+	level++;
+	if (node->m_left != nullptr)
+		WriteNode(node->m_left, out, level);
+	if (node->m_right != nullptr)
+		WriteNode(node->m_right, out, level);
+}
+
+string CTreeController::GetLevelString(size_t level)
+{
+	string levelStr = "";
+	for (size_t i = 0; i < level; i++)
+	{
+		levelStr += "--";
+	}
+	return levelStr;
 }

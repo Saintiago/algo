@@ -14,7 +14,8 @@ CDijkstraAlgorithm::~CDijkstraAlgorithm()
 
 void CDijkstraAlgorithm::MakeGraph(ifstream & fin)
 {
-	m_graph.CreateByAdjacencyMatrix(fin);
+	//m_graph.CreateByAdjacencyMatrix(fin);
+	m_graph.CreateByArcList(fin);
 }
 
 CGraph CDijkstraAlgorithm::GetGraph()

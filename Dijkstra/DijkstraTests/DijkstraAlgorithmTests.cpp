@@ -7,7 +7,7 @@ struct DijkstraAlgorithm_
 	std::ifstream fin;
 	DijkstraAlgorithm_()
 	{
-		fin.open("../Debug/input.txt");
+		fin.open("../input.txt");
 		dijkstra.MakeGraph(fin);
 		dijkstra.SetStartNode(0);
 	}

@@ -25,14 +25,8 @@ int main(int argc, char* argv[])
 		CDijkstraAlgorithm algorithm;
 		cout << "Getting graph from " << argv[1] << endl;
 		algorithm.MakeGraph(fin);
-		cout << "Our graph (adjacency matrix):" << endl;
-		fin.seekg(0);
-		string line;
-		while (!fin.eof())
-		{
-			getline(fin, line);
-			cout << line << endl;
-		}
+		cout << "Our graph (arc list):" << endl;
+		algorithm.GetGraph().WriteGraph(cout);
 		cout << endl;
 
 		string again;

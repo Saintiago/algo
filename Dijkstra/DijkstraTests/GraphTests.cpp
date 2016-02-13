@@ -7,7 +7,7 @@ struct Graph_
 	std::ifstream fin;
 	Graph_()
 	{
-		fin.open("../Debug/input.txt");
+		fin.open("../input.txt");
 	}
 };
 // Граф
@@ -16,7 +16,7 @@ BOOST_FIXTURE_TEST_SUITE(Graph, Graph_)
 	// может создавать узлы на основе матрицы смежности во входящем потоке
 	BOOST_AUTO_TEST_CASE(can_create_nodes_via_adjacency_matrix_in_input_stream)
 	{
-		graph.CreateByAdjacencyMatrix(fin);
+		graph.CreateByArcList(fin);
 		BOOST_CHECK_EQUAL(graph.Size(), 6);
 		BOOST_CHECK_EQUAL(graph.GetNode(0)->GetLinks().size(), 3);
 

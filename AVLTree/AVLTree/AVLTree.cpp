@@ -34,19 +34,27 @@ int main(int argc, char* argv[])
 			cout << endl << endl << "Please, enter key:" << endl;
 			cin >> key;
 
-			if (controller.IsSet(key))
+			if (cin.fail())
 			{
-				cout << "Record found: ";
-				cout << controller.GetRecord(key) << endl;
+				cout << "Please, enter correct integer for key." << endl;
+				cin.clear();
+				cin.ignore(); 
 			}
 			else
 			{
-				cout << "Record not found. Adding new record. Enter value for key " << key << ":" << endl;
-				cin >> value;
-				controller.AddRecord(key, value);
-				cout << "New record added." << endl;
+				if (controller.IsSet(key))
+				{
+					cout << "Record found: ";
+					cout << controller.GetRecord(key) << endl;
+				}
+				else
+				{
+					cout << "Record not found. Adding new record. Enter value for key " << key << ":" << endl;
+					cin >> value;
+					controller.AddRecord(key, value);
+					cout << "New record added." << endl;
+				}
 			}
-
 			cout << "Want to check another key? (press 'y' to continue)" << endl;
 			cin >> again;
 		} 
