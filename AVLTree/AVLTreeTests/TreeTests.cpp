@@ -26,15 +26,6 @@ string StreamToString(istream & in)
 // АВЛ-дерево
 BOOST_FIXTURE_TEST_SUITE(TreeController, TreeController_)
 
-	// может быть создано из входящего потока
-	BOOST_AUTO_TEST_CASE(can_be_created_from_input_stream)
-	{
-		fin.seekg(0);
-		stringstream ss;
-		controller.WriteTree(ss);
-		BOOST_CHECK_EQUAL(StreamToString(fin), StreamToString(ss));
-	}
-
 	// может вернуть запись по ключу
 	BOOST_AUTO_TEST_CASE(can_return_record_by_key)
 	{

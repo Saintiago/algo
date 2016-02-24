@@ -49,11 +49,6 @@ void CTreeController::ReadTree(ifstream & in)
 
 		NodePtr node = MakeNode(lineOfText);
 
-		if (node->GetType() == CNode::NodeType::OR)
-		{
-			m_orNodes.push_back(node);
-		}
-
 		int levelDiff = node->GetLevel() - parents.top()->GetLevel(); // int - cause can be less than 0
 		if (levelDiff == 1)
 		{
@@ -72,7 +67,13 @@ void CTreeController::ReadTree(ifstream & in)
 			}
 			parents.top()->AddSon(node);
 		}
+
 		prevNode = node;
+
+		if (node->GetType() == CNode::NodeType::OR)
+		{
+			m_orNodes.push_back(node);
+		}
 	}
 }
 
@@ -93,8 +94,14 @@ void CTreeController::WriteElements(ostream & out, unsigned recursionLevel)
 			WriteElements(out, (recursionLevel + 1));
 		}
 
+		if (!m_orNodes.at(recursionLevel)->IsParentChoosen())
+		{
+			continue;
+		}
+
 		if (AllOrNodesHaveChosen())
 		{
+			
 			m_elementCount++;
 			out << endl << "Element " << m_elementCount << endl << "-----------------------------" << endl;
 			WriteElement(out, m_tree->GetHead());
