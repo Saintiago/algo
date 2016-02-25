@@ -28,9 +28,7 @@ public:
 	void SetChosen(bool chosen);
 	NodePtr GetChosenSon();
 	bool SetNextChosenSon();
-	void SetParent(NodePtr parent);
 	void AddSon(NodePtr son);
-	bool IsParentChoosen();
 
 private:
 	NodePtrVector m_sons = {};
@@ -39,7 +37,5 @@ private:
 	size_t m_level;
 	bool m_chosen = false;
 	NodePtr m_parent;
-
-	NodePtr GetParent();
 };
 

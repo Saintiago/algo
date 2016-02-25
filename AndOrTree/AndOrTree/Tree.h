@@ -13,7 +13,6 @@ public:
 	~CTree();
 
 	NodePtr GetHead();
-	TreePtrVector GetElements();
 
 private:
 	NodePtr m_head = nullptr;

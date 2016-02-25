@@ -23,9 +23,13 @@ private:
 	std::string GetLevelString(size_t level, CNode::NodeType type);
 	void WriteNode(std::ostream & out, NodePtr node);
 	void WriteElement(std::ostream & out, NodePtr node);
-	std::vector<NodePtr> m_orNodes;
-	bool AllOrNodesHaveChosen();
+	void MakeBaseElement();
+	void MakeChoice(NodePtr node);
+	bool GetNextElement();
+	void BuildOrNodesList(NodePtr node);
+	void ResetOrNodesList();
 
+	std::stack<NodePtr> m_orNodes;
 	TreePtr m_tree;
 	unsigned m_elementCount = 0;
 };

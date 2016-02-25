@@ -69,11 +69,6 @@ void CTreeController::ReadTree(ifstream & in)
 		}
 
 		prevNode = node;
-
-		if (node->GetType() == CNode::NodeType::OR)
-		{
-			m_orNodes.push_back(node);
-		}
 	}
 }
 
@@ -87,39 +82,86 @@ void CTreeController::WriteTree(ostream & out)
 void CTreeController::WriteElements(ostream & out, unsigned recursionLevel)
 {
 	unsigned elementCount = 0;
-	while (m_orNodes.at(recursionLevel)->SetNextChosenSon())
+
+	MakeBaseElement();
+
+	do
 	{
-		if ((recursionLevel + 1) < m_orNodes.size())
-		{
-			WriteElements(out, (recursionLevel + 1));
-		}
+		m_elementCount++;
+		out << endl << "Element " << m_elementCount << endl << "-----------------------------" << endl;
+		WriteElement(out, m_tree->GetHead());
+	} 
+	while (GetNextElement());
+}
 
-		if (!m_orNodes.at(recursionLevel)->IsParentChoosen())
+bool CTreeController::GetNextElement()
+{
+	if (!m_orNodes.top()->SetNextChosenSon())
+	{
+		do
 		{
-			continue;
+			m_orNodes.pop();
 		}
+		while(m_orNodes.size() > 0 && !m_orNodes.top()->SetNextChosenSon());
+	}
 
-		if (AllOrNodesHaveChosen())
+	if (!m_orNodes.empty())
+	{
+		NodePtr chosen = m_orNodes.top()->GetChosenSon();
+		if (chosen->GetType() == CNode::NodeType::OR && chosen->GetChosenSon() == nullptr)
 		{
-			
-			m_elementCount++;
-			out << endl << "Element " << m_elementCount << endl << "-----------------------------" << endl;
-			WriteElement(out, m_tree->GetHead());
+			MakeChoice(chosen);
+		}
+		ResetOrNodesList();
+		BuildOrNodesList(m_tree->GetHead());
+	}
+
+	return (!m_orNodes.empty());
+}
+
+void CTreeController::MakeBaseElement()
+{
+	MakeChoice(m_tree->GetHead());
+	BuildOrNodesList(m_tree->GetHead());
+}
+
+void CTreeController::MakeChoice(NodePtr node)
+{
+	if (node->GetSons().size() > 0)
+	{
+		if (node->GetType() == CNode::NodeType::OR)
+		{
+			node->SetNextChosenSon();
+			MakeChoice(node->GetChosenSon());
+		}
+		else
+		{
+			for (auto son : node->GetSons())
+			{
+				son->SetChosen(true);
+				MakeChoice(son);
+			}
 		}
 	}
 }
 
-bool CTreeController::AllOrNodesHaveChosen()
+void CTreeController::BuildOrNodesList(NodePtr node)
 {
-	bool allNodesHaveChosen = true;
-	for (auto node : m_orNodes)
+	if (node->GetSons().size() > 0)
 	{
-		if (node->GetChosenSon() == nullptr)
+		if (node->GetType() == CNode::NodeType::OR)
 		{
-			allNodesHaveChosen = false;
+			m_orNodes.push(node);
+			BuildOrNodesList(node->GetChosenSon());
+		}
+		else
+		{
+			for (auto son : node->GetSons())
+			{
+				BuildOrNodesList(son);
+			}
 		}
 	}
-	return allNodesHaveChosen;
 }
 
 unsigned CTreeController::GetElementCount()
@@ -175,4 +217,10 @@ string CTreeController::GetLevelString(size_t level, CNode::NodeType type)
 		levelStr += typeCharsRev.at(type);
 	}
 	return levelStr;
+}
+
+void CTreeController::ResetOrNodesList()
+{
+	std::stack<NodePtr> emptyStack;
+	m_orNodes.swap(emptyStack);
 }

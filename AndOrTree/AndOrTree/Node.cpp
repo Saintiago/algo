@@ -32,8 +32,6 @@ size_t CNode::GetLevel() const
 
 void CNode::AddSon(NodePtr son)
 {
-	NodePtr parent = std::make_shared<CNode>(*this);
-	son->SetParent(parent);
 	m_sons.push_back(son);
 }
 
@@ -72,35 +70,12 @@ bool CNode::SetNextChosenSon()
 				m_sons.at(next)->SetChosen(true);
 				return true;
 			}
+			m_sons.at(0)->SetChosen(true);
 			return false;
 		}
 	}
 	m_sons.at(0)->SetChosen(true);
 	return true;
-}
-
-bool CNode::IsParentChoosen()
-{
-	NodePtr parent = GetParent();
-	if (parent == nullptr)
-	{
-		return true;
-	}
-	else if(parent->IsChosen())
-	{
-		return parent->IsParentChoosen();
-	}
-	return false;
-}
-
-void CNode::SetParent(NodePtr parent)
-{
-	m_parent = parent;
-}
-
-NodePtr CNode::GetParent()
-{
-	return m_parent;
 }
 
 CNode::~CNode()
